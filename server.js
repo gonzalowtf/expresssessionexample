@@ -14,6 +14,8 @@ var User= require('./models/user');
 
 
 var url = 'mongodb://localhost:27017/datafuzzy';	
+var url2 = "mongodb://hutter:cancer29@ds133438.mlab.com:33438/datafuzzy"; 
+
 
 
 app.use(morgan('combined'));
@@ -57,7 +59,7 @@ User.findOne({username: req.body.username,password:req.body.password},function(e
 	});
 });
 
-mongoose.connect(url,function(err){
+mongoose.connect(url2,function(err){
 	assert.equal(null, err);
   console.log("Connected successfully to server with mongoose");
 });
