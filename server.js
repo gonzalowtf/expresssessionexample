@@ -48,15 +48,35 @@ app.get('/',function(req,res){
     res.sendfile(__dirname + '/index.html');  
 
 });
+app.get('/login',function(req,res){
+    /*if(!req.session.userName && !req.session.visitCount){
+        req.session.userName = "gonzalo";
+        req.session.visitCount =1;
+        res.status(201).send(req.session);
+    }
+    else{
+        req.session.visitCount +=1;
+        res.status(200).send(req.session);
+    }
+    */
+    console.log(" session ?"+ req.session.user_id);
+    res.sendfile(__dirname + '/login.html');  
+
+});
 
 
 app.post('/sessions', function(req,res){
+    if(req.body.destroy == "NO"){
 User.findOne({username: req.body.username,password:req.body.password},function(err,results){
 		req.session.user_id = results._id;
 		console.log(req.session.user_id + "    user id en req.session");
         res.status(200).send(req.session);
 
 	});
+    }
+    else{
+        req.session.destroy();
+    }
 });
 
 mongoose.connect(url2,function(err){

@@ -4,8 +4,16 @@
         this.log= function(){
             var request  = {
                 username: "gonzalowtf",
-                password : "aereomodelismo12"
+                password : "aereomodelismo12",
+                destroy: "NO"
             };
             $http.post('sessions',request);
         };
+        this.log2= function(){
+            var request  = {
+                destroy : "SI"
+            };
+            $http.post('sessions',request);
+        };
+        
     }]);
