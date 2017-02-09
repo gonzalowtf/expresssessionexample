@@ -8,7 +8,7 @@ var express = require('express'),
     assert = require('assert'),
     morgan = require('morgan'),
     mongoose = require('mongoose');
-    port = 3940;
+    port = process.env.PORT ||3940;
 
 var User= require('./models/user');
 
@@ -34,17 +34,9 @@ app.use(session({
 */
 
 app.get('/',function(req,res){
-    /*if(!req.session.userName && !req.session.visitCount){
-        req.session.userName = "gonzalo";
-        req.session.visitCount =1;
-        res.status(201).send(req.session);
-    }
-    else{
-        req.session.visitCount +=1;
-        res.status(200).send(req.session);
-    }
-    */
-    console.log(" session ?"+ req.session.user_id);
+    
+    
+    console.log(" session main ?"+ req.session.username);
     res.sendfile(__dirname + '/index.html');  
 
 });
@@ -59,28 +51,29 @@ app.get('/login',function(req,res){
         res.status(200).send(req.session);
     }
     */
-    console.log(" session ?"+ req.session.user_id);
+    console.log(" session login ?"+ req.session.username);
     res.sendfile(__dirname + '/login.html');  
 
 });
 
 
 app.get('/sessions', function(req,res){
-    if(req.session.user_id){
+   if(req.session.username){
         res.json({
-            username: req.session.user_id
+            username: req.session.username
         });
     }
     else{
         res.status(200).send(req.session + "no se ha iniciado session");
         console.log("no se ha iniciado session");
     }
+   
 });
 
 app.post('/sessions', function(req,res){
     if(req.body.destroy == "NO"){
 User.findOne({username: req.body.username,password:req.body.password},function(err,results){
-		req.session.user_id = results._id;
+		req.session.username = results.username;
 		console.log(req.session.user_id + "    user id en req.session");
         res.status(200).send(req.session);
 

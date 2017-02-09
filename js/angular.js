@@ -14,6 +14,15 @@
             $http.post('sessions',request);
             location.href = "/";
         };
+        this.log1= function(){
+            var request  = {
+                username: "maestrulli",
+                password : "mas",
+                destroy: "NO"
+            };
+            $http.post('sessions',request);
+            location.href = "/";
+        };
         this.log2= function(){
             var request  = {
                 destroy : "SI"
@@ -24,6 +33,7 @@
         this.log3 = function(){
             alert($scope.user.data.username);
             console.log($scope.user.data.username);
+            console.log($scope.user);
         };
         
 
