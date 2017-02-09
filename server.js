@@ -65,6 +65,18 @@ app.get('/login',function(req,res){
 });
 
 
+app.get('/sessions', function(req,res){
+    if(req.session.user_id){
+        res.json({
+            username: req.session.user_id
+        });
+    }
+    else{
+        res.status(200).send(req.session + "no se ha iniciado session");
+        console.log("no se ha iniciado session");
+    }
+});
+
 app.post('/sessions', function(req,res){
     if(req.body.destroy == "NO"){
 User.findOne({username: req.body.username,password:req.body.password},function(err,results){
